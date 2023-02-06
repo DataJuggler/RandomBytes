@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DataJuggler.RandomShuffler" Version="7.0.3" />
+    <PackageReference Include="DataJuggler.RandomShuffler" Version="7.0.4" />
     <PackageReference Include="DataJuggler.Win.Controls" Version="7.0.1" />
   </ItemGroup>
 

@@ -5,6 +5,7 @@
 using DataJuggler.Win.Controls;
 using DataJuggler.Win.Controls.Interfaces;
 using DataJuggler.RandomShuffler;
+using DataJuggler.RandomShuffler.Enumerations;
 using System.Text;
 using RandomBytes.Enumerations;
 using DataJuggler.UltimateHelper;
@@ -22,8 +23,8 @@ namespace RandomBytes
     {
         
         #region Private Variables
-        private RandomShuffler shuffler;
-        private string delimiter;
+        private LargeNumberShuffler shuffler;
+        private string delimiter;        
         #endregion
         
         #region Constructor
@@ -104,14 +105,25 @@ namespace RandomBytes
                 int count = CountControl.IntValue;
                 int shuffles = ShufflesControl.IntValue;
 
+                // Clear before starting
+                ResultsControl.Text = "";
+
                 // Perform validation
                 bool isValid = ValidateInput(min, max, count, shuffles);
 
                 // if the value for isValid is true
                 if (isValid)
                 {
+                    // Set the text
+                    StatusLabel.Text = "Creating shuffler, please be patient...";
+                    StatusLabel.ForeColor = Color.LemonChiffon;
+
+                    // Refresh
+                    Refresh();
+                    Application.DoEvents();
+
                     // Create a new instance of a 'RandomShuffler' object.
-                    Shuffler = new RandomShuffler(min, max, count, shuffles);
+                    Shuffler = new LargeNumberShuffler(max.ToString().Length, min, max, NumberOutOfRangeOptionEnum.ReturnModulus);
 
                     // Setup the Graph
                     Graph.Minimum = 0;
@@ -119,22 +131,11 @@ namespace RandomBytes
                     Graph.Value = 0;
                     Graph.Visible = true;
 
-                    // Set the text
-                    StatusLabel.Text = "Generating...";
-                    StatusLabel.ForeColor = Color.LemonChiffon;
-
-                    // Refresh
-                    Refresh();
-                    Application.DoEvents();
-
                     // Create a new instance of a 'StringBuilder' object.
                     StringBuilder sb = new StringBuilder();
 
                     // local
                     int value = 0;
-
-                    // Perform extra shuffles
-                    Shuffler.Shuffle(ShufflesControl.IntValue);
 
                     // if there is one or more items to create
                     if (CountControl.IntValue > 0)
@@ -143,7 +144,7 @@ namespace RandomBytes
                         for (int x = 0; x < CountControl.IntValue; x++)
                         {
                             // Get the next random value
-                            value = Shuffler.PullNextItem();
+                            value = Shuffler.PullNumber();
 
                             // add this item
                             sb.Append(value);
@@ -216,7 +217,7 @@ namespace RandomBytes
                 MinControl.Text = "0";
                 MaxControl.Text = "1";
                 CountControl.Text = "1000";
-                ShufflesControl.Text = "20";
+                ShufflesControl.Text = "7";
                 DelimiterControl.LoadItems(typeof(DelimiterEnum));
                 DelimiterControl.SelectedIndexListener = this;
                 
@@ -318,7 +319,7 @@ namespace RandomBytes
             /// <summary>
             /// This property gets or sets the value for 'Shuffler'.
             /// </summary>
-            public RandomShuffler Shuffler
+            public LargeNumberShuffler Shuffler
             {
                 get { return shuffler; }
                 set { shuffler = value; }
