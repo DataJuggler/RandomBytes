@@ -9,6 +9,7 @@ using DataJuggler.RandomShuffler.Enumerations;
 using System.Text;
 using RandomBytes.Enumerations;
 using DataJuggler.UltimateHelper;
+using DataJuggler.RandomShuffler.Interfaces;
 
 #endregion
 
@@ -24,7 +25,8 @@ namespace RandomBytes
         
         #region Private Variables
         private LargeNumberShuffler shuffler;
-        private string delimiter;        
+        private string delimiter;
+        private ICardValueManager blackJackCardValueManager;
         #endregion
         
         #region Constructor
@@ -122,7 +124,19 @@ namespace RandomBytes
                     Refresh();
                     Application.DoEvents();
 
+                    // ******* Demo of RandomShuffler is commented out
                     // Create a new instance of a 'RandomShuffler' object.
+                    // int numberDecks = 1;
+                    // int initialShuffles = ShufflesControl.IntValue;
+                    // RandomShuffler shuffler = new RandomShuffler(MinControl.IntValue, MaxControl.IntValue, initialShuffles);
+
+                    // How many random sets to create
+                    // int setsToInitialize = 10;
+
+                    // Create a RandomShuffler (not a LargeNumberShuffler as shown below)
+                    // RandomShuffler shuffler = new RandomShuffler(MinControl.IntValue, MaxControl.IntValue, setsToInitialize, initialShuffles);
+
+                    // Create a new instance of a 'LargeNumberShuffler' object.
                     Shuffler = new LargeNumberShuffler(max.ToString().Length, min, max, NumberOutOfRangeOptionEnum.ReturnModulus);
 
                     // Setup the Graph
@@ -287,6 +301,18 @@ namespace RandomBytes
 
         #region Properties
 
+            #region BlackJackCardValueManager
+            /// <summary>
+            /// This property gets or sets the value for 'BlackJackCardValueManager'.
+            /// This class is not implemented in this example.
+            /// </summary>
+            public ICardValueManager BlackJackCardValueManager
+            {
+                get { return blackJackCardValueManager; }
+                set { blackJackCardValueManager = value; }
+            }
+            #endregion
+            
             #region Delimiter
             /// <summary>
             /// This property gets or sets the value for 'Delimiter'.
@@ -324,10 +350,10 @@ namespace RandomBytes
                 get { return shuffler; }
                 set { shuffler = value; }
             }
-            #endregion
-            
         #endregion
-        
+
+        #endregion
+
     }
     #endregion
 

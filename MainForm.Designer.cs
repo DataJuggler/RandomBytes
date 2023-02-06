@@ -53,7 +53,7 @@
             this.RandomNumbersButton.Size = new System.Drawing.Size(258, 53);
             this.RandomNumbersButton.TabIndex = 0;
             this.RandomNumbersButton.Theme = DataJuggler.Win.Controls.Enumerations.ThemeEnum.Dark;
-            this.RandomNumbersButton.Click += new System.EventHandler(this.RandomNumbersButton_Click);
+            this.RandomNumbersButton.Click += new System.EventHandler(this.RandomNumbersButton_Click);            
             // 
             // CountControl
             // 
